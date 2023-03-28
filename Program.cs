@@ -8,6 +8,9 @@ builder.Services.AddDbContext<AdventureWorksLt2019Context>(options => options.Us
 var app = builder.Build();
 
 
+app.MapGet("/customer", CustomerMethods.Read);
+
+app.MapPost("/customer/create", CustomerMethods.CreateCustomer);
 
 
 app.Run();
