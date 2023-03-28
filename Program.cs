@@ -10,5 +10,12 @@ var app = builder.Build();
 
 
 
+
+app.MapGet("/product", ProductMethods.Read);
+
+app.MapPost("/product/create", ProductMethods.CreateProduct);
+
+app.MapGet("/product/delete", ProductMethods.RemoveProduct);
+
 app.Run();
 
