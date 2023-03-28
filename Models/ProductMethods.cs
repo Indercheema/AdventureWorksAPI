@@ -49,7 +49,7 @@
                 context.Products.Remove(product);
                 context.SaveChanges();
             }
-            return Results.Ok($" Address with Id {product.ProductId} is removed successfully.");
+            return Results.Ok($" Product with Id {product.ProductId} is removed successfully.");
         }
 
     }
