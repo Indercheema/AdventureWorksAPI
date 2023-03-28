@@ -12,6 +12,7 @@ app.MapGet("/customer", CustomerMethods.Read);
 
 app.MapPost("/customer/create", CustomerMethods.CreateCustomer);
 
+app.MapGet("/customer/delete", CustomerMethods.RemoveCustomer);
 
 app.Run();
 

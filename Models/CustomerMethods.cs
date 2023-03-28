@@ -37,5 +37,21 @@ namespace AdventureWorksAPI.Models
             return Results.Ok(customers);
         }
 
+        public static IResult RemoveCustomer(AdventureWorksLt2019Context context, int id)
+        {
+            Customer customer = context.Customers.Where(c => c.CustomerId == id).FirstOrDefault();
+
+            if (customer == null)
+            {
+                return Results.BadRequest();
+            }
+            else if (customer != null)
+            {
+                context.Customers.Remove(customer);
+                context.SaveChanges();
+            }
+            return Results.Ok($" Customer with Id {customer.CustomerId} is removed successfully.");
+        }
+
     }
 }
