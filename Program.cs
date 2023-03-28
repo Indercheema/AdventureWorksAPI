@@ -8,6 +8,20 @@ builder.Services.AddDbContext<AdventureWorksLt2019Context>(options => options.Us
 var app = builder.Build();
 
 
+app.MapGet("/address/Delete", AddressMethods.RemoveAddress);
+
+app.MapPost("/address/update", AddressMethods.UpdateAddress);
+
+app.MapGet("/address", AddressMethods.Read);
+
+app.MapPost("/address/Create", AddressMethods.CreateAddress);
+
+
+
+app.MapGet("/Check", (int Id, AdventureWorksLt2019Context context) =>
+{
+    return context.Addresses.Where(a => a.AddressId == Id).FirstOrDefault();
+});
 
 
 app.Run();
