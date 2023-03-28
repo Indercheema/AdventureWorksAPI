@@ -27,10 +27,18 @@
                 return Results.Ok($"Address with Id {address.AddressId} is created");
             } else if(checkAddress != null)
             {
+                checkAddress.AddressLine1 = address.AddressLine1;
+                checkAddress.AddressLine2 = address.AddressLine2;
+                checkAddress.City= address.City;
+                checkAddress.StateProvince = address.StateProvince;
+                checkAddress.CountryRegion = address.CountryRegion;
+                checkAddress.PostalCode = address.PostalCode;
+                checkAddress.ModifiedDate = DateTime.Now;
                 context.Addresses.Update(checkAddress);
                 context.SaveChanges();
             }
-            return Results.Ok($"Address with Id{checkAddress.AddressLine1} is Updated");
+            return Results.Created($"/address?id={checkAddress.AddressId}", checkAddress);
+
         }
 
         public static IResult CreateAddress(AdventureWorksLt2019Context context, Address address)

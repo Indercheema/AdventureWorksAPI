@@ -10,7 +10,7 @@ var app = builder.Build();
 
 app.MapGet("/address/Delete", AddressMethods.RemoveAddress);
 
-app.MapPost("/address/update", AddressMethods.UpdateAddress);
+app.MapPut("/address/update", AddressMethods.UpdateAddress);
 
 app.MapGet("/address", AddressMethods.Read);
 
