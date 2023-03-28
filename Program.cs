@@ -8,7 +8,9 @@ builder.Services.AddDbContext<AdventureWorksLt2019Context>(options => options.Us
 var app = builder.Build();
 
 
+app.MapGet("/salesOrderHeader", SalesOrderHeaderMethods.Read);
 
+app.MapPost("/salesOrderHeader/Create", SalesOrderHeaderMethods.CreateSalesOrderHeader);
 
 app.Run();
 
