@@ -1,4 +1,6 @@
-﻿namespace AdventureWorksAPI.Models
+﻿using Microsoft.Identity.Client.Extensibility;
+
+namespace AdventureWorksAPI.Models
 {
     public class SalesOrderHeaderMethods
     {
@@ -24,6 +26,44 @@
             context.SaveChanges();
 
             return Results.Created($"/salesOrderHeader?id={salesOrderHeader.SalesOrderId}", salesOrderHeader);
+        }
+
+        public static IResult UpdateSalesOrderHeader(AdventureWorksLt2019Context context, int Id, SalesOrderHeader? salesOrderHeader)
+        {
+            SalesOrderHeader CurrentSale = context.SalesOrderHeaders.Where(s => s.SalesOrderId == Id).FirstOrDefault();
+
+            try
+            {
+                if (CurrentSale == null)
+                {
+                    context.SalesOrderHeaders.Add(salesOrderHeader);
+                    context.SaveChanges();
+                }
+                else if (CurrentSale != null)
+                {
+                    CurrentSale.RevisionNumber = salesOrderHeader.RevisionNumber;
+                    CurrentSale.DueDate = salesOrderHeader.DueDate;
+                    CurrentSale.ShipDate = salesOrderHeader.ShipDate;
+                    CurrentSale.Status = salesOrderHeader.Status;
+                    CurrentSale.AccountNumber = salesOrderHeader.AccountNumber;
+                    CurrentSale.ShipMethod = salesOrderHeader.ShipMethod;
+                    CurrentSale.SubTotal = salesOrderHeader.SubTotal;
+                    CurrentSale.TaxAmt = salesOrderHeader.TaxAmt;
+                    CurrentSale.Freight = salesOrderHeader.Freight;
+                    CurrentSale.TotalDue = salesOrderHeader.TotalDue;
+                    CurrentSale.Comment = salesOrderHeader.Comment;
+                    CurrentSale.Rowguid = Guid.NewGuid();
+                    CurrentSale.ModifiedDate = DateTime.Now;
+                    context.SalesOrderHeaders.Update(CurrentSale);
+                    context.SaveChanges();
+                }
+                return Results.Created($"/salesorderheader?id={salesOrderHeader.SalesOrderId}", salesOrderHeader);
+
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest();
+            }
         }
 
         public static IResult Read(AdventureWorksLt2019Context context, int? id)
