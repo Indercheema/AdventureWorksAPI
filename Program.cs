@@ -9,6 +9,7 @@ builder.Services.AddDbContext<AdventureWorksLt2019Context>(options => options.Us
 
 var app = builder.Build();
 
+// ============== Customer Endpoints
 
 app.MapGet("/customer", CustomerMethods.Read);
 
@@ -20,6 +21,10 @@ app.MapPut("/customer/update", CustomerMethods.UpdateCustomer);
 
 app.MapGet("/customer/details", CustomerMethods.GetCustomerDetails);
 
+app.MapPost("/customer/addtoaddress", CustomerMethods.AddCustomerToAddress);
+
+
+//===================SalesOrderHeader EndPoints
 
 app.MapGet("/salesOrderHeader", SalesOrderHeaderMethods.Read);
 
@@ -29,49 +34,21 @@ app.MapGet("/salesOrderHeader/Delete", SalesOrderHeaderMethods.RemoveSalesOrderH
 
 app.MapPut("/salesOrderHeader/update", SalesOrderHeaderMethods.UpdateSalesOrderHeader);
 
-app.MapPost("/customer/addtoaddress", (int customerId, int addressId, AdventureWorksLt2019Context context) =>
-{
-    Address newAdress =  context.Addresses.Where(a => a.AddressId == addressId).FirstOrDefault();
-    Customer newCustomer = context.Customers.Where(c => c.CustomerId == customerId).FirstOrDefault();
 
-    if(newCustomer != null && newAdress != null)
-    {
-        CustomerAddress cs = new CustomerAddress();
-        cs.CustomerId = newCustomer.CustomerId;
-        cs.AddressId = newAdress.AddressId;
-        cs.AddressType = "Main Office";
-        cs.Rowguid = Guid.NewGuid();
-        cs.ModifiedDate = DateTime.Now;
-        if (!context.CustomerAddresses.Any())
-        {
-            context.CustomerAddresses.Add(cs);
-        }
-        else
-        {
-            return Results.BadRequest("Customer alread added to address");
-        }
-        context.SaveChanges();
-    }
-
-    return Results.Ok($"{newCustomer.FirstName} is added to {newAdress.AddressLine1}");
-});
-
-
-app.MapGet("/address/Delete", AddressMethods.RemoveAddress);
-
-app.MapPut("/address/update", AddressMethods.UpdateAddress);
+// =================== Address EndPoints
 
 app.MapGet("/address", AddressMethods.Read);
 
 app.MapPost("/address/create", AddressMethods.CreateAddress);
 
+app.MapGet("/address/Delete", AddressMethods.RemoveAddress);
+
+app.MapPut("/address/update", AddressMethods.UpdateAddress);
 
 app.MapGet("/address/details", AddressMethods.GetAddressDetail);
 
 
-
-
-
+//================ Product EndPoints
 
 app.MapGet("/product", ProductMethods.Read);
 
@@ -82,6 +59,7 @@ app.MapGet("/product/delete", ProductMethods.RemoveProduct);
 app.MapPut("/product/update", ProductMethods.UpdateProduct);
 
 app.MapGet("/product/details", ProductMethods.GetProductDetails);
+
 
 app.Run();
 
