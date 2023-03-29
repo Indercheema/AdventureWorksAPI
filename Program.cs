@@ -13,20 +13,25 @@ app.MapPost("/customer/addtoaddress", (int customerId, int addressId, AdventureW
     Address newAdress =  context.Addresses.Where(a => a.AddressId == addressId).FirstOrDefault();
     Customer newCustomer = context.Customers.Where(c => c.CustomerId == customerId).FirstOrDefault();
 
-    CustomerAddress cs = new CustomerAddress();
-    cs.CustomerId = newCustomer.CustomerId;
-    cs.AddressId = newAdress.AddressId;
-    cs.AddressType = "Main Office";
-    cs.Rowguid = Guid.NewGuid();
-    cs.ModifiedDate= DateTime.Now;
-    if(!context.CustomerAddresses.Any())
+    if(newCustomer != null && newAdress != null)
     {
-        context.CustomerAddresses.Add(cs);
-    } else
-    {
-        return Results.BadRequest("Customer alread added to address");
+        CustomerAddress cs = new CustomerAddress();
+        cs.CustomerId = newCustomer.CustomerId;
+        cs.AddressId = newAdress.AddressId;
+        cs.AddressType = "Main Office";
+        cs.Rowguid = Guid.NewGuid();
+        cs.ModifiedDate = DateTime.Now;
+        if (!context.CustomerAddresses.Any())
+        {
+            context.CustomerAddresses.Add(cs);
+        }
+        else
+        {
+            return Results.BadRequest("Customer alread added to address");
+        }
+        context.SaveChanges();
     }
-    context.SaveChanges();
+
     return Results.Ok($"{newCustomer.FirstName} is added to {newAdress.AddressLine1}");
 });
 
