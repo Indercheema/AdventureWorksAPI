@@ -16,7 +16,6 @@ app.MapGet("/address", AddressMethods.Read);
 
 app.MapPost("/address/create", AddressMethods.CreateAddress);
 
-app.MapGet("/product/details", AddressMethods.GetProduct);
 
 app.MapGet("/address/details", AddressMethods.GetAddressDetail);
 
