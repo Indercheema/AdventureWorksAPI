@@ -5,6 +5,7 @@
 
         public static IResult CreateProduct(AdventureWorksLt2019Context context, Product product)
         {
+            product.Rowguid = Guid.NewGuid();
             context.Add(product);
             context.SaveChanges();
 
@@ -62,6 +63,7 @@
                 {
 
                     CreateProduct(context, product);
+                    return Results.Created($"/product?id={product.ProductId}", product);
                 }
                 else if (selectedProduct != null)
                 {
@@ -76,6 +78,9 @@
 
                     context.Products.Update(selectedProduct);
                     context.SaveChanges();
+
+                    Read(context, selectedProduct.ProductId);
+                    return Results.Ok(selectedProduct);
                 }
                 return Results.Ok();
 

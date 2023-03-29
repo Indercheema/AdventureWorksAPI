@@ -12,6 +12,7 @@ namespace AdventureWorksAPI.Models
     {
         public static IResult CreateCustomer(AdventureWorksLt2019Context context, Customer customer)
         {
+            customer.Rowguid = Guid.NewGuid();
             context.Add(customer);
             context.SaveChanges();
 
@@ -70,7 +71,8 @@ namespace AdventureWorksAPI.Models
                 {
                     
                     CreateCustomer(context, customer);
-                    return Results.Ok();
+
+                    return Results.Created($"/customer?id={customer.CustomerId}", customer);
                 }
                 else if (selectedCustomer != null)
                 {
@@ -87,6 +89,9 @@ namespace AdventureWorksAPI.Models
 
                     context.Customers.Update(selectedCustomer);
                     context.SaveChanges();
+
+                    Read(context, selectedCustomer.CustomerId);
+                    return Results.Ok(selectedCustomer);
                 }
                 return Results.Ok();
 
@@ -128,26 +133,41 @@ namespace AdventureWorksAPI.Models
             Address newAdress = context.Addresses.Where(a => a.AddressId == addressId).FirstOrDefault();
             Customer newCustomer = context.Customers.Where(c => c.CustomerId == customerId).FirstOrDefault();
 
+            if(newCustomer == null)
+            {
+                return Results.BadRequest("Customer not found");
+            }
+
             if (newCustomer != null && newAdress != null)
             {
                 CustomerAddress ca = new CustomerAddress();
+
                 ca.CustomerId = newCustomer.CustomerId;
                 ca.AddressId = newAdress.AddressId;
                 ca.AddressType = "Main Office";
                 ca.Rowguid = Guid.NewGuid();
                 ca.ModifiedDate = DateTime.Now;
-                if (!context.CustomerAddresses.Any())
+
+
+                if (!context.CustomerAddresses.Any(ca => ca.CustomerId == newCustomer.CustomerId && ca.AddressId == newAdress.AddressId))
                 {
                     context.CustomerAddresses.Add(ca);
+                    context.SaveChanges();
+
+                    return Results.Ok($"{newCustomer.FirstName} is added to {newAdress.AddressLine1}");
                 }
                 else
                 {
                     return Results.BadRequest("Customer already added to address");
                 }
-                context.SaveChanges();
+                
+            }
+            else if(newCustomer != null && newAdress == null)
+            {
+                return Results.BadRequest("Address not found");
             }
 
-            return Results.Ok($"{newCustomer.FirstName} is added to {newAdress.AddressLine1}");
+            return Results.Ok();
         }
 
     }

@@ -15,7 +15,7 @@ app.MapGet("/customer", CustomerMethods.Read);
 
 app.MapPost("/customer/create", CustomerMethods.CreateCustomer);
 
-app.MapGet("/customer/delete", CustomerMethods.RemoveCustomer);
+app.MapDelete("/customer/delete", CustomerMethods.RemoveCustomer);
 
 app.MapPut("/customer/update", CustomerMethods.UpdateCustomer);
 
@@ -30,7 +30,7 @@ app.MapGet("/salesOrderHeader", SalesOrderHeaderMethods.Read);
 
 app.MapPost("/salesOrderHeader/Create", SalesOrderHeaderMethods.CreateSalesOrderHeader);
 
-app.MapGet("/salesOrderHeader/Delete", SalesOrderHeaderMethods.RemoveSalesOrderHeader);
+app.MapDelete("/salesOrderHeader/Delete", SalesOrderHeaderMethods.RemoveSalesOrderHeader);
 
 app.MapPut("/salesOrderHeader/update", SalesOrderHeaderMethods.UpdateSalesOrderHeader);
 
@@ -41,7 +41,7 @@ app.MapGet("/address", AddressMethods.Read);
 
 app.MapPost("/address/create", AddressMethods.CreateAddress);
 
-app.MapGet("/address/Delete", AddressMethods.RemoveAddress);
+app.MapDelete("/address/Delete", AddressMethods.RemoveAddress);
 
 app.MapPut("/address/update", AddressMethods.UpdateAddress);
 
@@ -54,7 +54,7 @@ app.MapGet("/product", ProductMethods.Read);
 
 app.MapPost("/product/create", ProductMethods.CreateProduct);
 
-app.MapGet("/product/delete", ProductMethods.RemoveProduct);
+app.MapDelete("/product/delete", ProductMethods.RemoveProduct);
 
 app.MapPut("/product/update", ProductMethods.UpdateProduct);
 

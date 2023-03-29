@@ -30,6 +30,8 @@ namespace AdventureWorksAPI.Models
                 if (selectedAddress == null && address != null)
                 {
                     CreateAddress(context, address);
+
+                    return Results.Created($"/address?id={address.AddressId}", address);
                 }
                 else if (selectedAddress != null)
                 {
@@ -43,6 +45,9 @@ namespace AdventureWorksAPI.Models
 
                     context.Addresses.Update(selectedAddress);
                     context.SaveChanges();
+
+                    Read(context, selectedAddress.AddressId);
+                    return Results.Ok(selectedAddress);
                 }
                 return Results.Ok();
 
@@ -55,6 +60,7 @@ namespace AdventureWorksAPI.Models
 
         public static IResult CreateAddress(AdventureWorksLt2019Context context, Address address)
         {
+            address.Rowguid = Guid.NewGuid();
             context.Add(address);
             context.SaveChanges();
 

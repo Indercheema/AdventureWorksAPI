@@ -23,6 +23,7 @@ namespace AdventureWorksAPI.Models
 
         public static IResult CreateSalesOrderHeader(AdventureWorksLt2019Context context, SalesOrderHeader salesOrderHeader)
         {
+            salesOrderHeader.Rowguid = Guid.NewGuid();
             context.Add(salesOrderHeader);
             context.SaveChanges();
 
@@ -38,6 +39,8 @@ namespace AdventureWorksAPI.Models
                 if (CurrentSale == null &&  salesOrderHeader != null)
                 {
                     CreateSalesOrderHeader(context, salesOrderHeader);
+
+                    return Results.Created($"/salesOrderHeader?id={salesOrderHeader.SalesOrderId}", salesOrderHeader);
                 }
                 else if (CurrentSale != null)
                 {
@@ -58,6 +61,9 @@ namespace AdventureWorksAPI.Models
 
                     context.SalesOrderHeaders.Update(CurrentSale);
                     context.SaveChanges();
+
+                    Read(context, CurrentSale.SalesOrderId);
+                    return Results.Ok(CurrentSale);
                 }
                 return Results.Ok();
 
