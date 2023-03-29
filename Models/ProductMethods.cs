@@ -52,5 +52,53 @@
             return Results.Ok($" Product with Id {product.ProductId} is removed successfully.");
         }
 
+        public static IResult UpdateProduct(AdventureWorksLt2019Context context, int Id, Product? product)
+        {
+            Product? selectedProduct = context.Products.Find(Id);
+
+            try
+            {
+                if (selectedProduct == null && product != null)
+                {
+
+                    CreateProduct(context, product);
+                }
+                else if (selectedProduct != null)
+                {
+                    selectedProduct.Name = product.Name;
+                    selectedProduct.ProductNumber = product.ProductNumber;
+                    selectedProduct.Color = product.Color;
+                    selectedProduct.StandardCost= product.StandardCost;
+                    selectedProduct.ListPrice= product.ListPrice;
+                    selectedProduct.SellStartDate= product.SellStartDate;
+                    selectedProduct.Rowguid = Guid.NewGuid();
+                    selectedProduct.ModifiedDate = DateTime.Now;
+
+                    context.Products.Update(selectedProduct);
+                    context.SaveChanges();
+                }
+                return Results.Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
+
+        public static IResult GetProductDetails(AdventureWorksLt2019Context context, int id)
+        {
+            var result = context.Products.Where(p => p.ProductId == id)
+            .Select(p => new
+            {
+                product = p.ProductModel.Products.FirstOrDefault(),
+                productModel = p.ProductModel.Name,
+                productCategory = p.ProductCategory.Name,
+                productDescription = p.ProductModel.ProductModelProductDescriptions.Select(p => p.ProductDescription.Description)
+            });
+
+            return Results.Ok(result);
+        }
+
     }
 }
