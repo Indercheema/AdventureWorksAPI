@@ -10,6 +10,7 @@ namespace AdventureWorksAPI.Models
             if (address == null )
             {
                 return Results.BadRequest();
+
             } else if (address != null) 
             {
                 context.Remove(address);
@@ -83,8 +84,6 @@ namespace AdventureWorksAPI.Models
                     return Results.Ok(address);
                 }
             }
-
-
 
             return Results.Ok(addresses);
         }
