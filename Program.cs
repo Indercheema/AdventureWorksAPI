@@ -8,6 +8,7 @@ builder.Services.AddDbContext<AdventureWorksLt2019Context>(options => options.Us
 
 var app = builder.Build();
 
+
 app.MapPost("/customer/addtoaddress", (int customerId, int addressId, AdventureWorksLt2019Context context) =>
 {
     Address newAdress =  context.Addresses.Where(a => a.AddressId == addressId).FirstOrDefault();
@@ -34,6 +35,20 @@ app.MapPost("/customer/addtoaddress", (int customerId, int addressId, AdventureW
 
     return Results.Ok($"{newCustomer.FirstName} is added to {newAdress.AddressLine1}");
 });
+
+
+app.MapGet("/address/Delete", AddressMethods.RemoveAddress);
+
+app.MapPut("/address/update", AddressMethods.UpdateAddress);
+
+app.MapGet("/address", AddressMethods.Read);
+
+app.MapPost("/address/create", AddressMethods.CreateAddress);
+
+
+app.MapGet("/address/details", AddressMethods.GetAddressDetail);
+
+
 
 app.Run();
 
