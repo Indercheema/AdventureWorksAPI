@@ -21,13 +21,5 @@ app.MapGet("/address/details", AddressMethods.GetAddressDetail);
 
 
 
-
-
-app.MapGet("/Check", (int Id, AdventureWorksLt2019Context context) =>
-{
-    return context.Addresses.Where(a => a.AddressId == Id).FirstOrDefault();
-});
-
-
 app.Run();
 
