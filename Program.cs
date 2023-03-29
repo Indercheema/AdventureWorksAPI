@@ -12,5 +12,11 @@ app.MapGet("/salesOrderHeader", SalesOrderHeaderMethods.Read);
 
 app.MapPost("/salesOrderHeader/Create", SalesOrderHeaderMethods.CreateSalesOrderHeader);
 
+app.MapGet("/salesOrderHeader/Delete", SalesOrderHeaderMethods.RemoveSalesOrderHeader);
+
+app.MapPut("/salesOrderHeader/update", SalesOrderHeaderMethods.UpdateSalesOrderHeader);
+
+
+
 app.Run();
 
