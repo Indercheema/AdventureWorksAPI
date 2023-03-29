@@ -9,6 +9,15 @@ builder.Services.AddDbContext<AdventureWorksLt2019Context>(options => options.Us
 var app = builder.Build();
 
 
+
+app.MapGet("/salesOrderHeader", SalesOrderHeaderMethods.Read);
+
+app.MapPost("/salesOrderHeader/Create", SalesOrderHeaderMethods.CreateSalesOrderHeader);
+
+app.MapGet("/salesOrderHeader/Delete", SalesOrderHeaderMethods.RemoveSalesOrderHeader);
+
+app.MapPut("/salesOrderHeader/update", SalesOrderHeaderMethods.UpdateSalesOrderHeader);
+
 app.MapPost("/customer/addtoaddress", (int customerId, int addressId, AdventureWorksLt2019Context context) =>
 {
     Address newAdress =  context.Addresses.Where(a => a.AddressId == addressId).FirstOrDefault();
@@ -47,6 +56,7 @@ app.MapPost("/address/create", AddressMethods.CreateAddress);
 
 
 app.MapGet("/address/details", AddressMethods.GetAddressDetail);
+
 
 
 
