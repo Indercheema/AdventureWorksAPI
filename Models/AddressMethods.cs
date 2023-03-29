@@ -89,23 +89,6 @@ namespace AdventureWorksAPI.Models
             return Results.Ok(addresses);
         }
 
-        public static IResult GetProduct(AdventureWorksLt2019Context context, int productId)
-        {
-            //var result = context.Products.Where(p => p.ProductId == productId).Select(p => new { p.ProductModel, p.ProductCategory});
-
-            var result = context.Products.Where(p => p.ProductId == productId)
-                .Select(p => new
-                {
-                product = p.ProductModel.Products.FirstOrDefault(),
-                productModel = p.ProductModel.Name,
-                productCategory= p.ProductCategory.Name,
-                productDescription = p.ProductModel.ProductModelProductDescriptions.Select(p =>  p.ProductDescription.Description)
-            });
-         
-
-            //var result2 = context.ProductModelProductDescriptions.Include(p => p.ProductModel).ThenInclude(p => p.Products).Select(p => new { p.ProductModel, p.ProductDescription }).Wher;
-            return Results.Ok(result);
-        }
 
         public static IResult GetAddressDetail(AdventureWorksLt2019Context context, int addressId)
         {
