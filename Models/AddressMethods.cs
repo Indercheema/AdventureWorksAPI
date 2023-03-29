@@ -97,12 +97,25 @@ namespace AdventureWorksAPI.Models
         }
 
 
-        public static IResult GetAddressDetail(AdventureWorksLt2019Context context, int addressId)
+        public static IResult GetAddressDetails(AdventureWorksLt2019Context context, int addressId)
         {
+            Address? address = context.Addresses.Find(addressId);
+
+            if (address == null)
+            {
+                return Results.NotFound();
+            }
+
             var result = context.Addresses.Where(a => a.AddressId == addressId)
                 .Select(a => new
                 {
-                    address = a.CustomerAddresses.Select(a => a.Address),
+                    AddressId = a.AddressId,
+                    AddressLine1 = a.AddressLine1,
+                    AddressLine2 = a.AddressLine2,
+                    City = a.City,
+                    StateProvince = a.StateProvince,
+                    CountryRegion = a.CountryRegion,
+                    PostalCode = a.PostalCode,
                     customers = a.CustomerAddresses.Select(ca => new
                     {
                         customer = ca.Customer,

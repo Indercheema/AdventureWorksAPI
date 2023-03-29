@@ -28,9 +28,9 @@ app.MapPost("/customer/addtoaddress", CustomerMethods.AddCustomerToAddress);
 
 app.MapGet("/salesOrderHeader", SalesOrderHeaderMethods.Read);
 
-app.MapPost("/salesOrderHeader/Create", SalesOrderHeaderMethods.CreateSalesOrderHeader);
+app.MapPost("/salesOrderHeader/create", SalesOrderHeaderMethods.CreateSalesOrderHeader);
 
-app.MapDelete("/salesOrderHeader/Delete", SalesOrderHeaderMethods.RemoveSalesOrderHeader);
+app.MapDelete("/salesOrderHeader/delete", SalesOrderHeaderMethods.RemoveSalesOrderHeader);
 
 app.MapPut("/salesOrderHeader/update", SalesOrderHeaderMethods.UpdateSalesOrderHeader);
 
@@ -41,11 +41,11 @@ app.MapGet("/address", AddressMethods.Read);
 
 app.MapPost("/address/create", AddressMethods.CreateAddress);
 
-app.MapDelete("/address/Delete", AddressMethods.RemoveAddress);
+app.MapDelete("/address/delete", AddressMethods.RemoveAddress);
 
 app.MapPut("/address/update", AddressMethods.UpdateAddress);
 
-app.MapGet("/address/details", AddressMethods.GetAddressDetail);
+app.MapGet("/address/details", AddressMethods.GetAddressDetails);
 
 
 //================ Product EndPoints

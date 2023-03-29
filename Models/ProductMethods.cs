@@ -93,6 +93,13 @@
 
         public static IResult GetProductDetails(AdventureWorksLt2019Context context, int id)
         {
+            Product? product = context.Products.Find(id);
+
+            if (product == null)
+            {
+                return Results.NotFound();
+            }
+
             var result = context.Products.Where(p => p.ProductId == id)
             .Select(p => new
             {
