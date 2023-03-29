@@ -130,19 +130,19 @@ namespace AdventureWorksAPI.Models
 
             if (newCustomer != null && newAdress != null)
             {
-                CustomerAddress cs = new CustomerAddress();
-                cs.CustomerId = newCustomer.CustomerId;
-                cs.AddressId = newAdress.AddressId;
-                cs.AddressType = "Main Office";
-                cs.Rowguid = Guid.NewGuid();
-                cs.ModifiedDate = DateTime.Now;
+                CustomerAddress ca = new CustomerAddress();
+                ca.CustomerId = newCustomer.CustomerId;
+                ca.AddressId = newAdress.AddressId;
+                ca.AddressType = "Main Office";
+                ca.Rowguid = Guid.NewGuid();
+                ca.ModifiedDate = DateTime.Now;
                 if (!context.CustomerAddresses.Any())
                 {
-                    context.CustomerAddresses.Add(cs);
+                    context.CustomerAddresses.Add(ca);
                 }
                 else
                 {
-                    return Results.BadRequest("Customer alread added to address");
+                    return Results.BadRequest("Customer already added to address");
                 }
                 context.SaveChanges();
             }

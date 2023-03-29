@@ -7,11 +7,13 @@ namespace AdventureWorksAPI.Models
         public static IResult RemoveAddress(AdventureWorksLt2019Context context, int Id)
         {
             Address address = context.Addresses.Where(a => a.AddressId == Id).FirstOrDefault();
-            if (address == null )
+
+            if (address == null)
             {
                 return Results.BadRequest();
 
-            } else if (address != null) 
+            } 
+            else if (address != null) 
             {
                 context.Remove(address);
                 context.SaveChanges();
@@ -21,28 +23,28 @@ namespace AdventureWorksAPI.Models
         }
         public static IResult UpdateAddress(AdventureWorksLt2019Context context, int Id, Address? address)
         {
-            Address checkAddress = context.Addresses.Where(a => a.AddressId == Id).FirstOrDefault();
+            Address selectedAddress = context.Addresses.Where(a => a.AddressId == Id).FirstOrDefault();
 
             try
             {
-                if (checkAddress == null)
+                if (selectedAddress == null && address != null)
                 {
-                    context.Addresses.Add(address);
+                    CreateAddress(context, address);
+                }
+                else if (selectedAddress != null)
+                {
+                    selectedAddress.AddressLine1 = address.AddressLine1;
+                    selectedAddress.AddressLine2 = address.AddressLine2;
+                    selectedAddress.City = address.City;
+                    selectedAddress.StateProvince = address.StateProvince;
+                    selectedAddress.CountryRegion = address.CountryRegion;
+                    selectedAddress.PostalCode = address.PostalCode;
+                    selectedAddress.ModifiedDate = DateTime.Now;
+
+                    context.Addresses.Update(selectedAddress);
                     context.SaveChanges();
                 }
-                else if (checkAddress != null)
-                {
-                    checkAddress.AddressLine1 = address.AddressLine1;
-                    checkAddress.AddressLine2 = address.AddressLine2;
-                    checkAddress.City = address.City;
-                    checkAddress.StateProvince = address.StateProvince;
-                    checkAddress.CountryRegion = address.CountryRegion;
-                    checkAddress.PostalCode = address.PostalCode;
-                    checkAddress.ModifiedDate = DateTime.Now;
-                    context.Addresses.Update(checkAddress);
-                    context.SaveChanges();
-                }
-                return Results.Created($"/address?id={address.AddressId}", address);
+                return Results.Ok();
 
             }
             catch (Exception ex) 

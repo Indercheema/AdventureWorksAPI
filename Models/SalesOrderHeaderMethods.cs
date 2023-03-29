@@ -7,6 +7,7 @@ namespace AdventureWorksAPI.Models
         public static IResult RemoveSalesOrderHeader(AdventureWorksLt2019Context context, int Id)
         {
             SalesOrderHeader salesOrderHeader = context.SalesOrderHeaders.Where(s => s.SalesOrderId == Id).FirstOrDefault();
+
             if (salesOrderHeader == null)
             {
                 return Results.BadRequest();
@@ -34,10 +35,9 @@ namespace AdventureWorksAPI.Models
 
             try
             {
-                if (CurrentSale == null)
+                if (CurrentSale == null &&  salesOrderHeader != null)
                 {
-                    context.SalesOrderHeaders.Add(salesOrderHeader);
-                    context.SaveChanges();
+                    CreateSalesOrderHeader(context, salesOrderHeader);
                 }
                 else if (CurrentSale != null)
                 {
@@ -54,10 +54,12 @@ namespace AdventureWorksAPI.Models
                     CurrentSale.Comment = salesOrderHeader.Comment;
                     CurrentSale.Rowguid = Guid.NewGuid();
                     CurrentSale.ModifiedDate = DateTime.Now;
+
+
                     context.SalesOrderHeaders.Update(CurrentSale);
                     context.SaveChanges();
                 }
-                return Results.Created($"/salesorderheader?id={salesOrderHeader.SalesOrderId}", salesOrderHeader);
+                return Results.Ok();
 
             }
             catch (Exception ex)
