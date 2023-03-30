@@ -13,6 +13,7 @@ namespace AdventureWorksAPI.Models
         public static IResult CreateCustomer(AdventureWorksLt2019Context context, Customer customer)
         {
             customer.Rowguid = Guid.NewGuid();
+            customer.ModifiedDate= DateTime.Now;
             context.Add(customer);
             context.SaveChanges();
 

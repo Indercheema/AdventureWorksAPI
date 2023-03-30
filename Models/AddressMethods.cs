@@ -61,6 +61,7 @@ namespace AdventureWorksAPI.Models
         public static IResult CreateAddress(AdventureWorksLt2019Context context, Address address)
         {
             address.Rowguid = Guid.NewGuid();
+            address.ModifiedDate= DateTime.Now;
             context.Add(address);
             context.SaveChanges();
 

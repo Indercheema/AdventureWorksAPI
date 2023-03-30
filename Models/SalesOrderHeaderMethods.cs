@@ -24,6 +24,7 @@ namespace AdventureWorksAPI.Models
         public static IResult CreateSalesOrderHeader(AdventureWorksLt2019Context context, SalesOrderHeader salesOrderHeader)
         {
             salesOrderHeader.Rowguid = Guid.NewGuid();
+            salesOrderHeader.ModifiedDate = DateTime.Now;
             context.Add(salesOrderHeader);
             context.SaveChanges();
 

@@ -466,7 +466,7 @@ public partial class AdventureWorksLt2019Context : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.SalesOrderDetails)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(d => d.SalesOrder).WithMany(p => p.SalesOrderDetails).HasForeignKey(d => d.SalesOrderId).OnDelete(DeleteBehavior.Cascade);
         });
@@ -563,7 +563,7 @@ public partial class AdventureWorksLt2019Context : DbContext
             entity.HasOne(d => d.BillToAddress).WithMany(p => p.SalesOrderHeaderBillToAddresses)
                 .HasForeignKey(d => d.BillToAddressId)
                 .HasConstraintName("FK_SalesOrderHeader_Address_BillTo_AddressID")
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(d => d.Customer).WithMany(p => p.SalesOrderHeaders)
                 .HasForeignKey(d => d.CustomerId)
@@ -572,7 +572,7 @@ public partial class AdventureWorksLt2019Context : DbContext
             entity.HasOne(d => d.ShipToAddress).WithMany(p => p.SalesOrderHeaderShipToAddresses)
                 .HasForeignKey(d => d.ShipToAddressId)
                 .HasConstraintName("FK_SalesOrderHeader_Address_ShipTo_AddressID")
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.NoAction);
         });
 
         modelBuilder.Entity<VGetAllCategory>(entity =>

@@ -6,6 +6,7 @@
         public static IResult CreateProduct(AdventureWorksLt2019Context context, Product product)
         {
             product.Rowguid = Guid.NewGuid();
+            product.ModifiedDate = DateTime.Now;
             context.Add(product);
             context.SaveChanges();
 
