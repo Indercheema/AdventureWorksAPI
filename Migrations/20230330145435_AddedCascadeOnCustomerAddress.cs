@@ -5,7 +5,7 @@
 namespace AdventureWorksAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedOnDeleteCascade : Migration
+    public partial class AddedCascadeOnCustomerAddress : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,7 +39,6 @@ namespace AdventureWorksAPI.Migrations
                 principalTable: "Customer",
                 principalColumn: "CustomerID",
                 onDelete: ReferentialAction.Cascade);
-            
         }
 
         /// <inheritdoc />

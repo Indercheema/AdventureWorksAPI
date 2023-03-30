@@ -4,6 +4,7 @@ using AdventureWorksAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdventureWorksAPI.Migrations
 {
     [DbContext(typeof(AdventureWorksLt2019Context))]
-    partial class AdventureWorksLt2019ContextModelSnapshot : ModelSnapshot
+    [Migration("20230330145258_testing")]
+    partial class testing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1002,13 +1005,13 @@ namespace AdventureWorksAPI.Migrations
                     b.HasOne("AdventureWorksAPI.Models.Address", "Address")
                         .WithMany("CustomerAddresses")
                         .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("AdventureWorksAPI.Models.Customer", "Customer")
                         .WithMany("CustomerAddresses")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Address");
@@ -1020,13 +1023,11 @@ namespace AdventureWorksAPI.Migrations
                 {
                     b.HasOne("AdventureWorksAPI.Models.ProductCategory", "ProductCategory")
                         .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ProductCategoryId");
 
                     b.HasOne("AdventureWorksAPI.Models.ProductModel", "ProductModel")
                         .WithMany("Products")
-                        .HasForeignKey("ProductModelId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ProductModelId");
 
                     b.Navigation("ProductCategory");
 
@@ -1038,7 +1039,6 @@ namespace AdventureWorksAPI.Migrations
                     b.HasOne("AdventureWorksAPI.Models.ProductCategory", "ParentProductCategory")
                         .WithMany("InverseParentProductCategory")
                         .HasForeignKey("ParentProductCategoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .HasConstraintName("FK_ProductCategory_ProductCategory_ParentProductCategoryID_ProductCategoryID");
 
                     b.Navigation("ParentProductCategory");
@@ -1049,13 +1049,11 @@ namespace AdventureWorksAPI.Migrations
                     b.HasOne("AdventureWorksAPI.Models.ProductDescription", "ProductDescription")
                         .WithMany("ProductModelProductDescriptions")
                         .HasForeignKey("ProductDescriptionId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("AdventureWorksAPI.Models.ProductModel", "ProductModel")
                         .WithMany("ProductModelProductDescriptions")
                         .HasForeignKey("ProductModelId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ProductDescription");
@@ -1068,7 +1066,6 @@ namespace AdventureWorksAPI.Migrations
                     b.HasOne("AdventureWorksAPI.Models.Product", "Product")
                         .WithMany("SalesOrderDetails")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("AdventureWorksAPI.Models.SalesOrderHeader", "SalesOrder")
@@ -1087,7 +1084,7 @@ namespace AdventureWorksAPI.Migrations
                     b.HasOne("AdventureWorksAPI.Models.Address", "BillToAddress")
                         .WithMany("SalesOrderHeaderBillToAddresses")
                         .HasForeignKey("BillToAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .HasConstraintName("FK_SalesOrderHeader_Address_BillTo_AddressID");
 
                     b.HasOne("AdventureWorksAPI.Models.Customer", "Customer")
@@ -1099,7 +1096,7 @@ namespace AdventureWorksAPI.Migrations
                     b.HasOne("AdventureWorksAPI.Models.Address", "ShipToAddress")
                         .WithMany("SalesOrderHeaderShipToAddresses")
                         .HasForeignKey("ShipToAddressId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .HasConstraintName("FK_SalesOrderHeader_Address_ShipTo_AddressID");
 
                     b.Navigation("BillToAddress");

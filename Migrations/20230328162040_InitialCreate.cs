@@ -528,6 +528,7 @@ namespace AdventureWorksAPI.Migrations
                 schema: "SalesLT",
                 table: "SalesOrderHeader",
                 column: "ShipToAddressID");
+          
             
         }
 
