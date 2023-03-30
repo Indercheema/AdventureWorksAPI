@@ -118,7 +118,16 @@ namespace AdventureWorksAPI.Models
             var result = context.Customers.Where(c => c.CustomerId == id)
             .Select(x => new
             {
-                Customer = x.CustomerAddresses.Select(ca => ca.Customer),
+                CustomerId = x.CustomerId,
+                Title = x.Title,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                CompnayName = x.CompanyName,
+                SalesPerson = x.SalesPerson,
+                EmailAddress = x.EmailAddress,
+                Phone = x.Phone,
+                Rowguid = x.Rowguid,
+                ModifiedDate = x.ModifiedDate,
                 Addresses = x.CustomerAddresses.Select(x => new
                 {
                     Address = x.Address
