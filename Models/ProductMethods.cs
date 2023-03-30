@@ -44,7 +44,7 @@
 
             if (product == null)
             {
-                return Results.BadRequest();
+                return Results.NotFound();
             }
             else if (product != null)
             {

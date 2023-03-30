@@ -51,7 +51,7 @@ namespace AdventureWorksAPI.Models
 
             if (customer == null)
             {
-                return Results.BadRequest();
+                return Results.NotFound();
             }
             else if (customer != null)
             {

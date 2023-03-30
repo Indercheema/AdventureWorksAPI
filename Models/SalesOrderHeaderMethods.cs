@@ -10,7 +10,7 @@ namespace AdventureWorksAPI.Models
 
             if (salesOrderHeader == null)
             {
-                return Results.BadRequest();
+                return Results.NotFound();
             }
             else if (salesOrderHeader != null)
             {

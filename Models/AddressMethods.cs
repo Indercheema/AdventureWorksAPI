@@ -10,7 +10,7 @@ namespace AdventureWorksAPI.Models
 
             if (address == null)
             {
-                return Results.BadRequest();
+                return Results.NotFound();
 
             } 
             else if (address != null) 
