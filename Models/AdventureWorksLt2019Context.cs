@@ -201,11 +201,11 @@ public partial class AdventureWorksLt2019Context : DbContext
 
             entity.HasOne(d => d.Address).WithMany(p => p.CustomerAddresses)
                 .HasForeignKey(d => d.AddressId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(d => d.Customer).WithMany(p => p.CustomerAddresses)
                 .HasForeignKey(d => d.CustomerId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<ErrorLog>(entity =>
@@ -468,7 +468,7 @@ public partial class AdventureWorksLt2019Context : DbContext
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            entity.HasOne(d => d.SalesOrder).WithMany(p => p.SalesOrderDetails).HasForeignKey(d => d.SalesOrderId);
+            entity.HasOne(d => d.SalesOrder).WithMany(p => p.SalesOrderDetails).HasForeignKey(d => d.SalesOrderId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<SalesOrderHeader>(entity =>
@@ -562,15 +562,17 @@ public partial class AdventureWorksLt2019Context : DbContext
 
             entity.HasOne(d => d.BillToAddress).WithMany(p => p.SalesOrderHeaderBillToAddresses)
                 .HasForeignKey(d => d.BillToAddressId)
-                .HasConstraintName("FK_SalesOrderHeader_Address_BillTo_AddressID");
+                .HasConstraintName("FK_SalesOrderHeader_Address_BillTo_AddressID")
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             entity.HasOne(d => d.Customer).WithMany(p => p.SalesOrderHeaders)
                 .HasForeignKey(d => d.CustomerId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(d => d.ShipToAddress).WithMany(p => p.SalesOrderHeaderShipToAddresses)
                 .HasForeignKey(d => d.ShipToAddressId)
-                .HasConstraintName("FK_SalesOrderHeader_Address_ShipTo_AddressID");
+                .HasConstraintName("FK_SalesOrderHeader_Address_ShipTo_AddressID")
+                .OnDelete(DeleteBehavior.ClientCascade);
         });
 
         modelBuilder.Entity<VGetAllCategory>(entity =>
