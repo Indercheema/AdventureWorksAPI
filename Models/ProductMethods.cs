@@ -5,12 +5,19 @@
 
         public static IResult CreateProduct(AdventureWorksLt2019Context context, Product product)
         {
-            product.Rowguid = Guid.NewGuid();
-            product.ModifiedDate = DateTime.Now;
-            context.Add(product);
-            context.SaveChanges();
+            try
+            {
+                product.Rowguid = Guid.NewGuid();
+                product.ModifiedDate = DateTime.Now;
+                context.Add(product);
+                context.SaveChanges();
 
-            return Results.Created($"/product?id={product.ProductId}", product);
+                return Results.Created($"/product?id={product.ProductId}", product);
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest();
+            }
         }
 
         public static IResult Read(AdventureWorksLt2019Context context, int? id)

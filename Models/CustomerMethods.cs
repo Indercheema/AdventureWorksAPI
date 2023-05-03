@@ -12,12 +12,19 @@ namespace AdventureWorksAPI.Models
     {
         public static IResult CreateCustomer(AdventureWorksLt2019Context context, Customer customer)
         {
-            customer.Rowguid = Guid.NewGuid();
-            customer.ModifiedDate= DateTime.Now;
-            context.Add(customer);
-            context.SaveChanges();
+            try
+            {
+                customer.Rowguid = Guid.NewGuid();
+                customer.ModifiedDate = DateTime.Now;
+                context.Add(customer);
+                context.SaveChanges();
 
-            return Results.Created($"/customer?id={customer.CustomerId}", customer);
+                return Results.Created($"/customer?id={customer.CustomerId}", customer);
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest();
+            }
         }
 
         public static IResult Read(AdventureWorksLt2019Context context, int? id)

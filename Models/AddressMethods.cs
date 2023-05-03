@@ -60,12 +60,19 @@ namespace AdventureWorksAPI.Models
 
         public static IResult CreateAddress(AdventureWorksLt2019Context context, Address address)
         {
-            address.Rowguid = Guid.NewGuid();
-            address.ModifiedDate= DateTime.Now;
-            context.Add(address);
-            context.SaveChanges();
+            try
+            {
+                address.Rowguid = Guid.NewGuid();
+                address.ModifiedDate = DateTime.Now;
+                context.Add(address);
+                context.SaveChanges();
 
-            return Results.Created($"/address?id={address.AddressId}", address);
+                return Results.Created($"/address?id={address.AddressId}", address);
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest();
+            }
         }
 
 
