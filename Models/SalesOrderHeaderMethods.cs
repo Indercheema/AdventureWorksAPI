@@ -23,12 +23,19 @@ namespace AdventureWorksAPI.Models
 
         public static IResult CreateSalesOrderHeader(AdventureWorksLt2019Context context, SalesOrderHeader salesOrderHeader)
         {
-            salesOrderHeader.Rowguid = Guid.NewGuid();
-            salesOrderHeader.ModifiedDate = DateTime.Now;
-            context.Add(salesOrderHeader);
-            context.SaveChanges();
+            try
+            {
+                salesOrderHeader.Rowguid = Guid.NewGuid();
+                salesOrderHeader.ModifiedDate = DateTime.Now;
+                context.Add(salesOrderHeader);
+                context.SaveChanges();
 
-            return Results.Created($"/salesOrderHeader?id={salesOrderHeader.SalesOrderId}", salesOrderHeader);
+                return Results.Created($"/salesOrderHeader?id={salesOrderHeader.SalesOrderId}", salesOrderHeader);
+            } catch(Exception ex)
+            {
+                return Results.BadRequest();
+            }
+           
         }
 
         public static IResult UpdateSalesOrderHeader(AdventureWorksLt2019Context context, int Id, SalesOrderHeader? salesOrderHeader)
