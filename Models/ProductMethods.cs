@@ -1,4 +1,6 @@
-﻿namespace AdventureWorksAPI.Models
+﻿using AdventureWorksAPI.Data;
+
+namespace AdventureWorksAPI.Models
 {
     public class ProductMethods
     {

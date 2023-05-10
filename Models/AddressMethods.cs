@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AdventureWorksAPI.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksAPI.Models
 {

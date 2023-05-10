@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using AdventureWorksAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AdventureWorksAPI.Models;
+namespace AdventureWorksAPI.Data;
 
 public partial class AdventureWorksLt2019Context : DbContext
 {

@@ -465,11 +465,11 @@ namespace AdventureWorksAPI.Migrations
                 column: "rowguid",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "PXML_ProductModel_CatalogDescription",
-                schema: "SalesLT",
-                table: "ProductModel",
-                column: "CatalogDescription");
+            //migrationBuilder.CreateIndex(
+            //    name: "PXML_ProductModel_CatalogDescription",
+            //    schema: "SalesLT",
+            //    table: "ProductModel",
+            //    column: "CatalogDescription");
 
             migrationBuilder.CreateIndex(
                 name: "AK_ProductModelProductDescription_rowguid",

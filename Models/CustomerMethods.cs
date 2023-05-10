@@ -1,4 +1,5 @@
-﻿using Azure.Core;
+﻿using AdventureWorksAPI.Data;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
