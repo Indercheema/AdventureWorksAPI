@@ -1,4 +1,5 @@
-﻿using Microsoft.Identity.Client.Extensibility;
+﻿using AdventureWorksAPI.Data;
+using Microsoft.Identity.Client.Extensibility;
 
 namespace AdventureWorksAPI.Models
 {

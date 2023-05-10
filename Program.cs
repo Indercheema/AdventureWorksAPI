@@ -1,3 +1,4 @@
+using AdventureWorksAPI.Data;
 using AdventureWorksAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
@@ -6,6 +7,9 @@ using System.Net;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AdventureWorksLt2019Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AdventureWorksLT2019Context")));
+
+builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+
 
 var app = builder.Build();
 
